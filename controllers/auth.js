@@ -65,14 +65,14 @@ const loginUsuario = async (req, res = response) => {
             });
         }
 
-        //confirmar los passwords
-        const validPassword = bcrypt.compare(password, usuario.password)
+        // Confirmar los passwords
+        const validPassword = bcrypt.compareSync(password, usuario.password);
 
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
-                msg: 'password incorrecto'
-            })
+                msg: 'Password incorrecto'
+            });
         }
 
         //Generar nuestro JWT
@@ -109,9 +109,10 @@ const revalidarToken = async (req, res) => {
     //generar JWT
     const token = await generarJWT(uid, name)
 
-
     res.json({
         ok: true,
+        uid,
+        name,
         token
     })
 }

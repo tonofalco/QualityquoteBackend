@@ -16,4 +16,4 @@ const UsuarioSchema = Schema({
     }
 })
 
-module.exports = model('Usuario', UsuarioSchema)
+module.exports = model('User', UsuarioSchema) //nombre de la carpeta uses
