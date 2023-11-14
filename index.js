@@ -4,7 +4,6 @@ const cors = require('cors')
 // const { dbConection } = require('./database/config')
 const {dbConnectMySql} = require('./database/config_mysql')
 
-
 //*Crear el servidor de express
 const app = express()
 
@@ -14,7 +13,6 @@ dbConnectMySql()
 
 //* CORS
 app.use(cors())
-
 
 //*Lectura y parseo del body
 app.use(express.json())
