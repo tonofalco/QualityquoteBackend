@@ -1,36 +1,38 @@
-const { Schema, model } = require('mongoose')
+const { sequelize } = require("../database/config_mysql")
+const { DataTypes } = require('sequelize');
+const Usuario = require('./Usuario');
 
-const EventoSchema = Schema({
-
+const Evento = sequelize.define('Evento', {
+    transport: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    seats: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     title: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     notes: {
-        type: String,
+        type: DataTypes.STRING
     },
     start: {
-        type: Date,
-        required: true
+        type: DataTypes.DATE,
+        allowNull: false
     },
     end: {
-        type: Date,
-        required: true
+        type: DataTypes.DATE,
+        allowNull: false
     },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    userId: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
+});
 
-})
-
-EventoSchema.method('toJSON', function(){
-    const {__v, _id, ...object} = this.toObject()
-    object.id = _id
-    return object;
-})
+Evento.belongsTo(Usuario, { foreignKey: 'userId' });
 
 
-
-module.exports = model('Evento', EventoSchema)
+module.exports = Evento;

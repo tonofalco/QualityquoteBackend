@@ -3,6 +3,26 @@ const bcrypt = require('bcryptjs')
 const Usuario = require('../models/Usuario')
 const { generarJWT } = require('../helpers/jwt');
 
+
+//---------OBTENER------------
+const obtenerUsuarios = async (req, res) => {
+    try {
+        // Obtener usuarios
+        const usuarios = await Usuario.findAll();
+
+        res.status(200).json({
+            ok: true,
+            usuarios,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error al obtener los usuarios',
+        });
+    }
+};
+
 //---------CREAR------------
 const crearUsuario = async (req, res = response) => {
 
@@ -10,7 +30,9 @@ const crearUsuario = async (req, res = response) => {
 
     try {
 
-        let usuario = await Usuario.findOne({ email })
+        // let usuario = await Usuario.findOne({ email })
+        let usuario = await Usuario.findOne({ where: { email } });
+
 
         if (usuario) {
             return res.status(400).json({
@@ -48,7 +70,6 @@ const crearUsuario = async (req, res = response) => {
 
 }
 
-
 //----------LOGIN-----------
 const loginUsuario = async (req, res = response) => {
 
@@ -56,7 +77,8 @@ const loginUsuario = async (req, res = response) => {
 
     try {
 
-        const usuario = await Usuario.findOne({ email })
+        // const usuario = await Usuario.findOne({ email })
+        let usuario = await Usuario.findOne({ where: { email } });
 
         if (!usuario) {
             return res.status(400).json({
@@ -75,8 +97,11 @@ const loginUsuario = async (req, res = response) => {
             });
         }
 
+
+
         //Generar nuestro JWT
         const token = await generarJWT(usuario.id, usuario.name)
+
 
 
         res.json({
@@ -86,7 +111,6 @@ const loginUsuario = async (req, res = response) => {
             token
         })
 
-
     } catch (error) {
         console.log(error)
         res.status(500).json({
@@ -95,8 +119,6 @@ const loginUsuario = async (req, res = response) => {
         })
     }
 }
-
-
 
 //---------REVALIDAR------------
 const revalidarToken = async (req, res) => {
@@ -118,9 +140,79 @@ const revalidarToken = async (req, res) => {
 }
 
 
+const actualizarUsuario = async (req, res) => {
+    const { id } = req.params;
+    const { name, email, password, role } = req.body;
+
+    try {
+        // Verificar si el usuario existe
+        let usuario = await Usuario.findByPk(id);
+
+        if (!usuario) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no encontrado',
+            });
+        }
+
+        // Actualizar los campos del usuario
+        usuario.name = name;
+        usuario.email = email;
+        usuario.password = password;
+        usuario.role = role;
+
+        // Guardar los cambios en la base de datos
+        await usuario.save();
+
+        res.status(200).json({
+            ok: true,
+            usuario,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error al actualizar el usuario',
+        });
+    }
+};
+
+//---------Eliminar------------
+const eliminarUsuario = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Verificar si el usuario existe
+        const usuario = await Usuario.findByPk(id);
+
+        if (!usuario) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no encontrado',
+            });
+        }
+
+        // Eliminar el usuario
+        await usuario.destroy();
+
+        res.status(200).json({
+            ok: true,
+            msg: 'Usuario eliminado correctamente',
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error al eliminar el usuario',
+        });
+    }
+};
 
 module.exports = {
+    obtenerUsuarios,
     crearUsuario,
     loginUsuario,
-    revalidarToken
+    revalidarToken,
+    actualizarUsuario,
+    eliminarUsuario,
 }

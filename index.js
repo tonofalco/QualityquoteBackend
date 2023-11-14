@@ -1,14 +1,16 @@
 const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
-const { dbConection } = require('./database/config')
+// const { dbConection } = require('./database/config')
+const {dbConnectMySql} = require('./database/config_mysql')
 
 
 //*Crear el servidor de express
 const app = express()
 
 // Base de datos
-dbConection()
+// dbConection()
+dbConnectMySql()
 
 //* CORS
 app.use(cors())
@@ -22,6 +24,8 @@ app.use(express.json())
 app.use('/api/auth', require('./routes/auth'));
 //TODO CRUD: eventos
 app.use('/api/events', require('./routes/events'));
+//TODO CRUD: configuracion
+app.use('/api/config', require('./routes/config'));
 
 //* Directorio Publico
 app.use(express.static('public'))

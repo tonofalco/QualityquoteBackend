@@ -3,7 +3,7 @@
     Rutas de usuarios / Auth
     host + /api/auth
 */
-const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth')
+const { crearUsuario, loginUsuario, revalidarToken, obtenerUsuarios, eliminarUsuario } = require('../controllers/auth')
 
 const { Router } = require('express')
 const { check } = require('express-validator')
@@ -11,6 +11,16 @@ const { validarCampos } = require('../middlewares/validarCampos')
 const { validarJwt } = require('../middlewares/validarJwt')
 
 const router = Router()
+
+/* ----- OBTENER USUARIOS ----- */
+router.get(
+    '/',
+    [
+
+    ],
+    obtenerUsuarios
+)
+
 
 /* ----- CREAR ----- */
 router.post(
@@ -40,6 +50,15 @@ router.post(
 
 /* ----- REVALIDAR ----- */
 router.get('/renew', validarJwt ,revalidarToken)
+
+// borrar eventos
+router.delete(
+    '/:id',
+    [
+
+    ],
+    eliminarUsuario
+)
 
 
 module.exports = router

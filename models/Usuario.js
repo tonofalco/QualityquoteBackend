@@ -1,19 +1,24 @@
-const { Schema, model } = require('mongoose')
+const { sequelize } = require("../database/config_mysql")
+const { DataTypes } = require("sequelize");
 
-const UsuarioSchema = Schema({
+const Usuario = sequelize.define('Usuario', {
     name: {
-        type: String,
-        required: true,
+        type: DataTypes.STRING,
+        allowNull: false
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
     },
     password: {
-        type: String,
-        required: true,
-    }
-})
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    role: {
+        type: DataTypes.ENUM(["user", "admin"]),
+        allowNull: false
+    },
+});
 
-module.exports = model('User', UsuarioSchema) //nombre de la carpeta uses
+module.exports = Usuario;
