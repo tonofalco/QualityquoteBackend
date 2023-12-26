@@ -3,7 +3,7 @@
     Rutas de usuarios / Auth
     host + /api/auth
 */
-const { crearUsuario, loginUsuario, revalidarToken, obtenerUsuarios, eliminarUsuario } = require('../controllers/auth')
+const { crearUsuario, loginUsuario, revalidarToken, obtenerUsuarios, actualizarUsuario, eliminarUsuario } = require('../controllers/auth')
 
 const { Router } = require('express')
 const { check } = require('express-validator')
@@ -21,8 +21,7 @@ router.get(
     obtenerUsuarios
 )
 
-
-/* ----- CREAR ----- */
+/* ----- CREAR USUARIO ----- */
 router.post(
     '/new',
     [
@@ -47,11 +46,23 @@ router.post(
     loginUsuario
 )
 
+/* ----- ACTUALIZAR USUARIO ----- */
+router.put(
+    '/:id',
+    [
+        check('name', 'El nombre es obligatorio').not().isEmpty(),
+        check('email', 'el email es obligatorio').isEmail(),
+        // check('password', 'La contraseña es obligatoria').not().isEmpty(),
+        check('role', 'El rol es obligatorio').not().isEmpty(),
+        validarCampos
+    ],
+    actualizarUsuario
+)
 
 /* ----- REVALIDAR ----- */
-router.get('/renew', validarJwt ,revalidarToken)
+router.get('/renew', validarJwt, revalidarToken)
 
-// borrar eventos
+/* ----- ELIMINAR USUARIO ----- */
 router.delete(
     '/:id',
     [

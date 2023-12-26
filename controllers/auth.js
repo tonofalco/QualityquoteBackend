@@ -158,8 +158,12 @@ const actualizarUsuario = async (req, res) => {
         // Actualizar los campos del usuario
         usuario.name = name;
         usuario.email = email;
-        usuario.password = password;
         usuario.role = role;
+        // usuario.password = password;
+
+        // // Encriptar contraseña
+        // const salt = bcrypt.genSaltSync();
+        // usuario.password = bcrypt.hashSync(password, salt);
 
         // Guardar los cambios en la base de datos
         await usuario.save();
