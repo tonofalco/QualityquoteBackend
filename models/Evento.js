@@ -3,6 +3,10 @@ const { DataTypes } = require('sequelize');
 const Usuario = require('./Usuario');
 
 const Evento = sequelize.define('Evento', {
+    transportNumber: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     transport: {
         type: DataTypes.STRING,
         allowNull: false
@@ -11,12 +15,29 @@ const Evento = sequelize.define('Evento', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    title: {
+    nameClient: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    notes: {
-        type: DataTypes.STRING
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    departure: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    destination: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    price: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    advance: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     start: {
         type: DataTypes.DATE,
@@ -25,6 +46,13 @@ const Evento = sequelize.define('Evento', {
     end: {
         type: DataTypes.DATE,
         allowNull: false
+    },
+    // title: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
+    notes: {
+        type: DataTypes.STRING
     },
     userId: {
         type: DataTypes.STRING,

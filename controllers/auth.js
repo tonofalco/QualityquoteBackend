@@ -64,7 +64,7 @@ const crearUsuario = async (req, res = response) => {
         console.log(error)
         res.status(500).json({
             ok: false,
-            msg: 'por favor hable con al admin'
+            msg: 'por favor hable con un admin'
         })
     }
 
@@ -207,7 +207,7 @@ const eliminarUsuario = async (req, res) => {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Error al eliminar el usuario',
+            msg: 'Error por favor hable con un administrador',
         });
     }
 };
