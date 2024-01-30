@@ -30,7 +30,15 @@ router.get(
 router.post(
     '/',
     [
-        // check('title', 'El titulo es obligatorio').not().isEmpty(),
+        check('seats', 'El numero de transportes es obligatorio').not().isEmpty(),
+        check('transport', 'El tipo de transporte es obligatorio').not().isEmpty(),
+        check('transportNumber', 'El numero de plazas es obligatorio').not().isEmpty(),
+        check('nameClient', 'El nombre del cliente es obligatorio').not().isEmpty(),
+        check('phone', 'El telefono del cliente es obligatorio').not().isEmpty(),
+        check('departure', 'El punto de salida es obligatorio').not().isEmpty(),
+        check('destination', 'El punto de llegada es obligatorio').not().isEmpty(),
+        check('price', 'El precio es obligatorio').not().isEmpty(),
+        check('advance', 'El anticipo es obligatorio').not().isEmpty(),
         check('start', 'Fecha de inicio es obligatoria').custom(isDate),
         check('end', 'Fecha de finalizacion es obligatoria').custom(isDate),
         validarCampos
@@ -42,7 +50,15 @@ router.post(
 router.put(
     '/:id',
     [
-        // check('title', 'El titulo es obligatorio').not().isEmpty(),
+        check('seats', 'El numero de transportes es obligatorio').not().isEmpty(),
+        check('transport', 'El tipo de transporte es obligatorio').not().isEmpty(),
+        check('transportNumber', 'El numero de plazas es obligatorio').not().isEmpty(),
+        check('nameClient', 'El nombre del cliente es obligatorio').not().isEmpty(),
+        check('phone', 'El telefono del cliente es obligatorio').not().isEmpty(),
+        check('departure', 'El punto de salida es obligatorio').not().isEmpty(),
+        check('destination', 'El punto de llegada es obligatorio').not().isEmpty(),
+        check('price', 'El precio es obligatorio').not().isEmpty(),
+        check('advance', 'El anticipo es obligatorio').not().isEmpty(),
         check('start', 'Fecha de inicio es obligatoria').custom(isDate),
         check('end', 'Fecha de finalizacion es obligatoria').custom(isDate),
         validarCampos
