@@ -44,7 +44,7 @@ const crearUsuario = async (req, res = response) => {
         usuario = new Usuario(req.body) //agregar usuario
 
         //generar JWT
-        const token = await generarJWT(usuario.id, usuario.name)
+        const token = await generarJWT(usuario.id, usuario.name, usuario.role)
 
 
         //Encriptar contraseña
@@ -57,6 +57,7 @@ const crearUsuario = async (req, res = response) => {
             ok: true,
             uid: usuario.id,
             name: usuario.name,
+            role: usuario.role,
             token
         })
 
@@ -100,14 +101,23 @@ const loginUsuario = async (req, res = response) => {
 
 
         //Generar nuestro JWT
-        const token = await generarJWT(usuario.id, usuario.name)
+        const token = await generarJWT(usuario.id, usuario.name, usuario.role)
 
 
+
+        // console.log('Login response:', {
+        //     ok: true,
+        //     uid: usuario.id,
+        //     name: usuario.name,
+        //     role: usuario.role,
+        //     token
+        // });
 
         res.json({
             ok: true,
             uid: usuario.id,
             name: usuario.name,
+            role: usuario.role,
             token
         })
 
@@ -126,15 +136,25 @@ const revalidarToken = async (req, res) => {
     // const uid = req.uid
     // const name = req.name
 
-    const { uid, name } = req
+    const { uid, name, role } = req
+    // console.log(role)
 
     //generar JWT
-    const token = await generarJWT(uid, name)
+    const token = await generarJWT(uid, name, role)
+
+    // console.log('Revalidar Token response:', {
+    //     ok: true,
+    //     uid,
+    //     name,
+    //     role,
+    //     token
+    // });
 
     res.json({
         ok: true,
         uid,
         name,
+        role,
         token
     })
 }

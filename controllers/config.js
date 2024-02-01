@@ -22,6 +22,7 @@ const obtenerCostos = async (req, res) => {
     }
 };
 
+
 const actualizarCostos = async (req, res) => {
     const { id } = req.params; // Obtener el ID de configuración de los parámetros de la solicitud
     const nuevosValores = req.body; // Obtener los nuevos valores de configuración de la solicitud

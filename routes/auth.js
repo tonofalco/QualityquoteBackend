@@ -29,6 +29,7 @@ router.post(
         check('name', 'el nombre es obligatorio').not().isEmpty(),
         check('email', 'el email es obligatorio').isEmail(),
         check('password', 'el password debe ser de 6 caracteres').isLength({ min: 6 }),
+        check('role', 'el rol es obligatorio').not().isEmpty(),
         validarCampos
     ],
     crearUsuario
@@ -51,9 +52,9 @@ router.put(
     '/:id',
     [
         check('name', 'El nombre es obligatorio').not().isEmpty(),
+        check('role', 'El rol es obligatorio').not().isEmpty(),
         check('email', 'el email es obligatorio').isEmail(),
         // check('password', 'La contraseña es obligatoria').not().isEmpty(),
-        check('role', 'El rol es obligatorio').not().isEmpty(),
         validarCampos
     ],
     actualizarUsuario
