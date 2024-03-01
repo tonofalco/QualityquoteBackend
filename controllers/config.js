@@ -1,18 +1,19 @@
-
-
-// const { response } = require('express');
 const Configuracion = require('../models/Configuracion');
+// const Usuario = require('../models/Usuario');
 
 // Ruta para obtener los valores de configuración
 const obtenerCostos = async (req, res) => {
     try {
+            // console.log(req.body);
+
         // Obtener usuarios
-        const configuracion = await Configuracion.findAll();
+        const configuracion = await Configuracion.findAll()
 
         res.status(200).json({
             ok: true,
             configuracion,
         });
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -21,7 +22,6 @@ const obtenerCostos = async (req, res) => {
         });
     }
 };
-
 
 const actualizarCostos = async (req, res) => {
     const { id } = req.params; // Obtener el ID de configuración de los parámetros de la solicitud
@@ -60,6 +60,20 @@ const actualizarCostos = async (req, res) => {
         });
     }
 };
+
+// const checkUserRole = (requiredRole) => {
+//     return (req, res, next) => {
+//         // Asumiendo que el rol del usuario está almacenado en req.user.role
+//         const userRole = req.user.role;
+
+//         // Verificar si el usuario tiene el rol necesario para acceder a la ruta
+//         if (userRole === requiredRole || userRole === 'admin') {
+//             next(); // Permitir el acceso
+//         } else {
+//             return res.status(403).json({ message: 'Acceso no autorizado' });
+//         }
+//     };
+// };
 
 
 module.exports = {

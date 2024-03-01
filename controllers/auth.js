@@ -69,7 +69,7 @@ const crearUsuario = async (req, res = response) => {
         })
     }
 
-}
+};
 
 //----------LOGIN-----------
 const loginUsuario = async (req, res = response) => {
@@ -128,7 +128,42 @@ const loginUsuario = async (req, res = response) => {
             msg: 'por favor hable con al admin'
         })
     }
-}
+};
+
+//---------ACTUALIZAR------------
+const actualizarUsuario = async (req, res) => {
+    const { id } = req.params;
+    const { name, email, password, role } = req.body;
+
+    try {
+        // Verificar si el usuario existe
+        let usuario = await Usuario.findByPk(id);
+
+        if (!usuario) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no encontrado',
+            });
+        }
+
+        // Actualizar los campos del usuario
+        usuario.name = name;
+        usuario.email = email;
+        usuario.role = role;
+        await usuario.save();
+
+        res.status(200).json({
+            ok: true,
+            usuario,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error al actualizar el usuario',
+        });
+    }
+};
 
 //---------REVALIDAR------------
 const revalidarToken = async (req, res) => {
@@ -157,48 +192,6 @@ const revalidarToken = async (req, res) => {
         role,
         token
     })
-}
-
-
-const actualizarUsuario = async (req, res) => {
-    const { id } = req.params;
-    const { name, email, password, role } = req.body;
-
-    try {
-        // Verificar si el usuario existe
-        let usuario = await Usuario.findByPk(id);
-
-        if (!usuario) {
-            return res.status(404).json({
-                ok: false,
-                msg: 'Usuario no encontrado',
-            });
-        }
-
-        // Actualizar los campos del usuario
-        usuario.name = name;
-        usuario.email = email;
-        usuario.role = role;
-        // usuario.password = password;
-
-        // // Encriptar contraseña
-        // const salt = bcrypt.genSaltSync();
-        // usuario.password = bcrypt.hashSync(password, salt);
-
-        // Guardar los cambios en la base de datos
-        await usuario.save();
-
-        res.status(200).json({
-            ok: true,
-            usuario,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            ok: false,
-            msg: 'Error al actualizar el usuario',
-        });
-    }
 };
 
 //---------Eliminar------------

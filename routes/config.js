@@ -1,16 +1,20 @@
+const { Router } = require('express')
+
+const { validarCampos } = require('../middlewares/validarCampos')
+const { validarJwt } = require('../middlewares/validarJwt')
 
 const {actualizarCostos, obtenerCostos} = require('../controllers/config') 
 
-const { Router } = require('express')
-const { validarCampos } = require('../middlewares/validarCampos')
-
 const router = Router()
+
+// -- todas tienen que pasar por la validacion del JWT -- //
+router.use(validarJwt)
 
 /* ----- OBTENER COSTOS ----- */
 router.get(
     '/costs',
     [
-
+        
     ],
     obtenerCostos
 )

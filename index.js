@@ -3,6 +3,7 @@ require('dotenv').config()
 const cors = require('cors')
 // const { dbConection } = require('./database/config')
 const {dbConnectMySql} = require('./database/config_mysql')
+const os = require('node:path');
 
 //*Crear el servidor de express
 const app = express()
@@ -24,6 +25,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
 //TODO CRUD: configuracion
 app.use('/api/config', require('./routes/config'));
+//TODO CRUD: Costos Dia extra
+app.use('/api/extraDayCosts', require('./routes/extraDayCosts'));
 
 //* Directorio Publico
 app.use(express.static('public'))

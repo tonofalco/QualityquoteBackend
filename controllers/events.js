@@ -31,7 +31,7 @@ const getEventos = async (req, res) => {
 const crearEvento = async (req, res) => {
     try {
         // Extraer los datos del evento del cuerpo de la solicitud
-        const {transport, transportNumber, seats, nameClient, phone, departure, destination, title, notes, start, end, price, advance } = req.body;
+        const { transport, transportNumber, seats, nameClient, phone, departure, destination, title, notes, start, end, price, advance } = req.body;
 
         // Crear el evento
         const evento = await Evento.create({
@@ -154,6 +154,7 @@ const eliminarEvento = async (req, res = response) => {
         });
     }
 };
+
 
 
 module.exports = {
