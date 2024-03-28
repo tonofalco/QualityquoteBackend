@@ -3,7 +3,7 @@ const cors = require('cors')
 require('dotenv').config()
 const pc = require('picocolors');
 
-const {dbConnectMySql} = require('./database/config');
+const {dbConnectMySql} = require('./src/database/config');
 // import { dbConnectMySql } from './database/config'
 
 // Se Crea el servidor con express
@@ -20,13 +20,13 @@ app.use(express.json())
 
 // RUTAS
 //TODO: auth | obtener, crear, eliminar, actualizar, login, renew
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', require('./src/routes/auth'));
 // //TODO CRUD: events | obtener, crear, eliminar, actualizar
-app.use('/api/events', require('./routes/events'));
+app.use('/api/events', require('./src/routes/events'));
 // //TODO CRUD: config | pendiente
-app.use('/api/config', require('./routes/config'));
+app.use('/api/config', require('./src/routes/config'));
 // //TODO CRUD: Costos Dia extra | obtener, crear, eliminar, actualizar
-app.use('/api/cost/extraDay', require('./routes/extraDayCosts'));
+app.use('/api/cost/extraDay', require('./src/routes/extraDayCosts'));
 
 // Directorio Publico backend
 app.use(express.static('public'))
