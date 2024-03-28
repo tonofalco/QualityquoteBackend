@@ -1,4 +1,4 @@
-const CostosDiaExtra = require("../models/costosDiaExtra");
+const CostosDiaExtra = require("../models/CostosDiaExtra");
 
 
 
