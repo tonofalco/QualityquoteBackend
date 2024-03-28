@@ -13,7 +13,7 @@ router.use(validarJwt)
 
 /* ----- OBTENER COSTOS ----- */
 router.get(
-    '/costs',
+    '/',
     [
 
     ],
@@ -22,7 +22,7 @@ router.get(
 
 /* ----- CREAR COSTO ----- */
 router.post(
-    '/',
+    '/new',
     [
         check('cost', 'El nombre del costo es obligatorio').not().isEmpty(),
         check('valueEs', 'El valor entre semana es obligatorio').not().isEmpty(),

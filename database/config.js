@@ -1,28 +1,30 @@
-const mongoose = require('mongoose');
+const { Sequelize } = require("sequelize");
+const pc = require('picocolors');
 
-mongoose.set('strictQuery', true);
+const NODE_ENV = process.env.NODE_ENV;
 
-const dbConection = async() => {
+const database = (NODE_ENV === 'test') ? process.env.MYSQL_DATABASE_TEST : process.env.MYSQL_DATABASE;
+const username = process.env.MYSQL_USER;
+const password = process.env.MYSQL_PASSWORD;
+const host = process.env.MYSQL_HOST;
 
-    try {
-
-        await mongoose.connect(process.env.DB_CNN, {
-            // useNewUrlParser: true,
-            // useUnifiedTopology: true,
-            // useCreateIndex: true
-        });
-
-        console.log('DB online')
-
-    } catch (error) {
-
-        console.log(error)
-        throw new Error('Error a la hora de inicializar DB')
-
+const db = new Sequelize(database, username, password, {
+    host,
+    dialect: "mysql",
+    pool: {
+        max: 10,
+        min: 0,
     }
-}
+});
+
+const dbConnectMySql = async () => {
+    try {
+        await db.authenticate();
+        console.log(pc.bgGreen("MYSQL Conexión correcta"));
+    } catch (e) {
+        console.log(pc.bgRed("MYSQL Error de Conexión", e));
+    }
+};
 
 
-module.exports = {
-    dbConection
-}
+module.exports = { sequelize: db, dbConnectMySql }

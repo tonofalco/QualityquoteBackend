@@ -1,37 +1,37 @@
-const express = require('express')
-require('dotenv').config()
+const express = require('express');
 const cors = require('cors')
-// const { dbConection } = require('./database/config')
-const {dbConnectMySql} = require('./database/config_mysql')
-const os = require('node:path');
+require('dotenv').config()
+const pc = require('picocolors');
 
-//*Crear el servidor de express
+const {dbConnectMySql} = require('./database/config');
+// import { dbConnectMySql } from './database/config'
+
+// Se Crea el servidor con express
 const app = express()
 
-// Base de datos
-// dbConection()
+// Conectamos bd
 dbConnectMySql()
 
-//* CORS
+// CORS
 app.use(cors())
 
-//*Lectura y parseo del body
+// Lectura y parseo del body
 app.use(express.json())
 
-//*Rutas
-//TODO: auth // crear, login, renew
+// RUTAS
+//TODO: auth | obtener, crear, eliminar, actualizar, login, renew
 app.use('/api/auth', require('./routes/auth'));
-//TODO CRUD: eventos
+// //TODO CRUD: events | obtener, crear, eliminar, actualizar
 app.use('/api/events', require('./routes/events'));
-//TODO CRUD: configuracion
+// //TODO CRUD: config | pendiente
 app.use('/api/config', require('./routes/config'));
-//TODO CRUD: Costos Dia extra
-app.use('/api/extraDayCosts', require('./routes/extraDayCosts'));
+// //TODO CRUD: Costos Dia extra | obtener, crear, eliminar, actualizar
+app.use('/api/cost/extraDay', require('./routes/extraDayCosts'));
 
-//* Directorio Publico
+// Directorio Publico backend
 app.use(express.static('public'))
 
-//*Escuchar peticiones
+// Se escucha la peticion en puerto
 app.listen(process.env.PORT, () => {
-    console.log(`servidor corriendo en puerto ${process.env.PORT}`)
+    console.log(pc.bgBlue(`servidor corriendo en puerto ${process.env.PORT}`))
 })
