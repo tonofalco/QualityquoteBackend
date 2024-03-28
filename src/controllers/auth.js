@@ -10,7 +10,7 @@ const obtenerUsuarios = async (req, res) => {
     try {
         // Obtener usuarios
         const usuarios = await Usuario.findAll();
-        console.log(usuarios);
+        // console.log(usuarios);
         
         res.status(200).json({
             ok: true,
