@@ -3,28 +3,29 @@ const { Router } = require('express')
 const { validarCampos } = require('../middlewares/validarCampos')
 const { validarJwt } = require('../middlewares/validarJwt')
 
-const {actualizarCostos, obtenerCostos} = require('../controllers/config') 
+const { actualizarCostos, obtenerCostos } = require('../controllers/config')
 
 const router = Router()
 
 // -- todas tienen que pasar por la validacion del JWT -- //
 router.use(validarJwt)
 
-/* ----- OBTENER COSTOS ----- */
+/* ----- OBTENER COSTOS TABLA KMS ----- */
 router.get(
-    '/costs',
+    '/',
     [
-        
+
     ],
     obtenerCostos
 )
 
-// Actualizar eventos
+/* ----- ACTUALIZAR COSTOS TABLA KMS ----- */
 router.put(
-    '/costs/:id',
+    '/:id',
     [
         validarCampos
     ],
-    actualizarCostos)
+    actualizarCostos
+)
 
 module.exports = router;

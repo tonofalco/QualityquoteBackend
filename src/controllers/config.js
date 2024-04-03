@@ -1,17 +1,15 @@
-const Configuracion = require('../models/Configuracion');
-// const Usuario = require('../models/Usuario');
+const CostosTablaKms = require('../models/CostosTablaKms');
 
-// Ruta para obtener los valores de configuración
+//---------OBTENER COSTOS POR KMS------------
 const obtenerCostos = async (req, res) => {
     try {
-            // console.log(req.body);
 
-        // Obtener usuarios
-        const configuracion = await Configuracion.findAll()
+        // Obtener costes de bd
+        const costesKms = await CostosTablaKms.findAll()
 
         res.status(200).json({
             ok: true,
-            configuracion,
+            costesKms,
         });
 
     } catch (error) {
@@ -23,19 +21,20 @@ const obtenerCostos = async (req, res) => {
     }
 };
 
+
+//---------ACTUALIZAR COSTO POR KMS------------
 const actualizarCostos = async (req, res) => {
     const { id } = req.params; // Obtener el ID de configuración de los parámetros de la solicitud
     const nuevosValores = req.body; // Obtener los nuevos valores de configuración de la solicitud
 
     // Convertir los valores necesarios a enteros
     nuevosValores.gasoline = parseFloat(nuevosValores.gasoline, 10);
-    // Otros valores que necesiten ser convertidos a enteros
 
     try {
+        let costesPorId = await CostosTablaKms.findByPk(id);
+        
         // Verificar si la configuración existe
-        let configuracion = await Configuracion.findByPk(id);
-
-        if (!configuracion) {
+        if (!costesPorId) {
             return res.status(404).json({
                 ok: false,
                 msg: 'Configuración no encontrada',
@@ -43,14 +42,14 @@ const actualizarCostos = async (req, res) => {
         }
 
         // Actualizar los campos de la configuración con los nuevos valores
-        Object.assign(configuracion, nuevosValores);
+        Object.assign(costesPorId, nuevosValores);
 
         // Guardar los cambios en la base de datos
-        await configuracion.save();
+        await costesPorId.save();
 
         res.status(200).json({
             ok: true,
-            configuracion,
+            configuracion: costesPorId,
         });
     } catch (error) {
         console.log(error);
@@ -60,20 +59,6 @@ const actualizarCostos = async (req, res) => {
         });
     }
 };
-
-// const checkUserRole = (requiredRole) => {
-//     return (req, res, next) => {
-//         // Asumiendo que el rol del usuario está almacenado en req.user.role
-//         const userRole = req.user.role;
-
-//         // Verificar si el usuario tiene el rol necesario para acceder a la ruta
-//         if (userRole === requiredRole || userRole === 'admin') {
-//             next(); // Permitir el acceso
-//         } else {
-//             return res.status(403).json({ message: 'Acceso no autorizado' });
-//         }
-//     };
-// };
 
 
 module.exports = {

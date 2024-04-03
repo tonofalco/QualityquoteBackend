@@ -1,10 +1,9 @@
 const express = require('express');
 const cors = require('cors')
-require('dotenv').config()
 const pc = require('picocolors');
 
+require('dotenv').config()
 const {dbConnectMySql} = require('./src/database/config');
-// import { dbConnectMySql } from './database/config'
 
 // Se Crea el servidor con express
 const app = express()
@@ -19,13 +18,13 @@ app.use(cors())
 app.use(express.json())
 
 // RUTAS
-//TODO: auth | obtener, crear, eliminar, actualizar, login, renew
+//TODO: auth | obtener, crear, eliminar, actualizar, login, renewJWT
 app.use('/api/auth', require('./src/routes/auth'));
-// //TODO CRUD: events | obtener, crear, eliminar, actualizar
+//TODO CRUD: events | obtener, crear, eliminar, actualizar
 app.use('/api/events', require('./src/routes/events'));
-// //TODO CRUD: config | pendiente
-app.use('/api/config', require('./src/routes/config'));
-// //TODO CRUD: Costos Dia extra | obtener, crear, eliminar, actualizar
+//TODO CRUD: Costos Tabla kms | obtener, actualizar
+app.use('/api/cost/kmsTable', require('./src/routes/config'));
+//TODO CRUD: Costos Dia extra | obtener, crear, eliminar, actualizar
 app.use('/api/cost/extraDay', require('./src/routes/extraDayCosts'));
 
 // Directorio Publico backend
