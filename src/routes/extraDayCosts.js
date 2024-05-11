@@ -9,7 +9,7 @@ const { obtenerCostosDiaExtra, crearCostoDiaExtra, actualizarCostoDiaExtra, elim
 const router = Router()
 
 // -- todas tienen que pasar por la validacion del JWT -- //
-router.use(validarJwt)
+// router.use(validarJwt)
 
 /* ----- OBTENER COSTOS ----- */
 router.get(
@@ -29,6 +29,7 @@ router.post(
         check('valueFs', 'El valor en fin de semana es obligatorio').not().isEmpty(),
         validarCampos
     ],
+    validarJwt,
     crearCostoDiaExtra
 )
 
@@ -41,6 +42,7 @@ router.put(
         check('valueFs', 'El valor en fin de semana es obligatorio').not().isEmpty(),
         validarCampos
     ],
+    validarJwt,
     actualizarCostoDiaExtra
 )
 
@@ -50,6 +52,7 @@ router.delete(
     [
 
     ],
+    validarJwt,
     eliminarCostoDiaExtra
 )
 
