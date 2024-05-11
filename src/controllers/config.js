@@ -28,7 +28,7 @@ const actualizarCostos = async (req, res) => {
     const nuevosValores = req.body; // Obtener los nuevos valores de configuración de la solicitud
 
     // Convertir los valores necesarios a enteros
-    nuevosValores.gasoline = parseFloat(nuevosValores.gasoline, 10);
+    // nuevosValores.gasoline = parseFloat(nuevosValores.gasoline, 10);
 
     try {
         let costesPorId = await CostosTablaKms.findByPk(id);

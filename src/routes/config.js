@@ -8,7 +8,7 @@ const { actualizarCostos, obtenerCostos } = require('../controllers/config')
 const router = Router()
 
 // -- todas tienen que pasar por la validacion del JWT -- //
-router.use(validarJwt)
+// router.use(validarJwt)
 
 /* ----- OBTENER COSTOS TABLA KMS ----- */
 router.get(
@@ -25,6 +25,7 @@ router.put(
     [
         validarCampos
     ],
+    validarJwt,
     actualizarCostos
 )
 
