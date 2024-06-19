@@ -31,7 +31,7 @@ const getEventos = async (req, res) => {
 const crearEvento = async (req, res) => {
     try {
         // Extraer los datos del evento del cuerpo de la solicitud
-        const { transport, transportNumber, seats, nameClient, phone, departure, destination, title, notes, start, end, price, advance } = req.body;
+        const { transport, transportNumber, seats, nameClient, phone, departure, destination, status, notes, start, end, price, advance } = req.body;
 
         // Crear el evento
         const evento = await Evento.create({
@@ -44,7 +44,7 @@ const crearEvento = async (req, res) => {
             destination,
             price,
             advance,
-            // title,
+            status,
             notes,
             start,
             end,
@@ -97,7 +97,7 @@ const actualizarEvento = async (req, res) => {
         evento.destination = req.body.destination;
         evento.price = req.body.price;
         evento.advance = req.body.advance;
-        // evento.title = req.body.title;
+        evento.status = req.body.status;
         evento.notes = req.body.notes;
         evento.start = req.body.start;
         evento.end = req.body.end;

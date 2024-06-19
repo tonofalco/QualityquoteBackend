@@ -47,10 +47,10 @@ const Evento = sequelize.define('Evento', {
         type: DataTypes.DATE,
         allowNull: false
     },
-    // title: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false
-    // },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     notes: {
         type: DataTypes.STRING
     },
