@@ -60,8 +60,8 @@ router.put(
     actualizarUsuario
 )
 
-// /* ----- REVALIDAR ----- */
-// router.get('/renew', validarJwt, revalidarToken)
+/* ----- REVALIDAR ----- */
+router.get('/renew', validarJwt, revalidarToken)
 
 /* ----- ELIMINAR USUARIO ----- */
 router.delete(
