@@ -31,6 +31,7 @@ router.post(
     '/',
     [
         check('seats', 'El numero de transportes es obligatorio').not().isEmpty(),
+        check('status', 'El status es obligatorio').not().isEmpty(),
         check('transport', 'El tipo de transporte es obligatorio').not().isEmpty(),
         check('transportNumber', 'El numero de plazas es obligatorio').not().isEmpty(),
         check('nameClient', 'El nombre del cliente es obligatorio').not().isEmpty(),

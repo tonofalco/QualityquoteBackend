@@ -16,6 +16,10 @@ const CostosEspecialesPrimerDia = sequelize.define('CostosEspecialesPrimerDia', 
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    sumEs: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
 
 });
 
