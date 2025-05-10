@@ -19,9 +19,11 @@ app.use(express.json())
 
 // RUTAS
 //TODO: auth | obtener, crear, eliminar, actualizar, login, renewJWT
-app.use('/api/auth', require('./src/routes/auth'));
+app.use('/api/users', require('./src/routes/userRoute'));
 //TODO CRUD: events | obtener, crear, eliminar, actualizar
 app.use('/api/events', require('./src/routes/events'));
+//TODO CRUD: events | obtener, crear, eliminar, actualizar
+app.use('/api/aerialEvents', require('./src/routes/aerialEvents'));
 //TODO CRUD: Costos Tabla kms | obtener, actualizar
 app.use('/api/cost/kmsTable', require('./src/routes/config'));
 //TODO CRUD: Costos especiales primer dia | obtener, actualizar
