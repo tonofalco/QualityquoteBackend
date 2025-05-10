@@ -9,7 +9,7 @@ const { check } = require('express-validator')
 const { isDate } = require('../helpers/isDate')
 const { validarCampos } = require('../middlewares/validarCampos')
 const { validarJwt } = require('../middlewares/validarJwt')
-const { getEventos, crearEvento, actualizarEvento, eliminarEvento } = require('../controllers/events')
+const { getEarthEvent, createEarthEvent, updateEarthEvent, deleteEarthEvent } = require('../controllers/earthEventController')
 
 
 const router = Router()
@@ -23,7 +23,7 @@ router.get(
     [
 
     ],
-    getEventos
+    getEarthEvent
 )
 
 // crear un nuevo eventos
@@ -44,7 +44,7 @@ router.post(
         check('end', 'Fecha de finalizacion es obligatoria').custom(isDate),
         validarCampos
     ],
-    crearEvento
+    createEarthEvent
 )
 
 // Actualizar eventos
@@ -64,7 +64,7 @@ router.put(
         check('end', 'Fecha de finalizacion es obligatoria').custom(isDate),
         validarCampos
     ],
-    actualizarEvento)
+    updateEarthEvent)
 
 // borrar eventos
 router.delete(
@@ -72,7 +72,7 @@ router.delete(
     [
 
     ],
-    eliminarEvento
+    deleteEarthEvent
 )
 
 

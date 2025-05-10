@@ -1,8 +1,8 @@
 const { sequelize } = require("../database/config")
 const { DataTypes } = require('sequelize');
-const Usuario = require('./Usuario');
+const user = require('./User');
 
-const Evento = sequelize.define('Evento', {
+const EarthEvent = sequelize.define('earthEvent', {
     transportNumber: {
         type: DataTypes.STRING,
         allowNull: false
@@ -60,7 +60,7 @@ const Evento = sequelize.define('Evento', {
     }
 });
 
-Evento.belongsTo(Usuario, { foreignKey: 'userId' });
+EarthEvent.belongsTo(user, { foreignKey: 'userId' });
 
 
-module.exports = Evento;
+module.exports = EarthEvent;

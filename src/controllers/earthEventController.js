@@ -1,14 +1,14 @@
 const { response } = require('express')
-const Evento = require('../models/Evento')
-const Usuario = require('../models/Usuario');
+const EarthEvent = require('../models/EarthEvent')
+const User = require('../models/User');
 
 
-const getEventos = async (req, res) => {
+const getEarthEvent = async (req, res) => {
     try {
         // Obtener eventos
-        const eventos = await Evento.findAll({
+        const eventos = await EarthEvent.findAll({
             include: {
-                model: Usuario,
+                model: User,
                 attributes: ['name'],
             },
         });
@@ -28,13 +28,13 @@ const getEventos = async (req, res) => {
 };
 
 
-const crearEvento = async (req, res) => {
+const createEarthEvent = async (req, res) => {
     try {
         // Extraer los datos del evento del cuerpo de la solicitud
         const { transport, transportNumber, seats, nameClient, phone, departure, destination, status, notes, start, end, price, advance } = req.body;
 
         // Crear el evento
-        const evento = await Evento.create({
+        const evento = await EarthEvent.create({
             seats,
             transport,
             transportNumber,
@@ -65,13 +65,13 @@ const crearEvento = async (req, res) => {
 };
 
 
-const actualizarEvento = async (req, res) => {
+const updateEarthEvent = async (req, res) => {
     try {
         const eventoId = req.params.id;
         const uid = req.uid;
 
         // Buscar el evento por su ID
-        const evento = await Evento.findByPk(eventoId);
+        const evento = await EarthEvent.findByPk(eventoId);
 
         if (!evento) {
             return res.status(404).json({
@@ -119,12 +119,12 @@ const actualizarEvento = async (req, res) => {
 };
 
 
-const eliminarEvento = async (req, res = response) => {
+const deleteEarthEvent = async (req, res = response) => {
     const eventoId = req.params.id;
     const uid = req.uid;
 
     try {
-        const evento = await Evento.findByPk(eventoId);
+        const evento = await EarthEvent.findByPk(eventoId);
 
         if (!evento) {
             return res.status(404).json({
@@ -140,7 +140,7 @@ const eliminarEvento = async (req, res = response) => {
             });
         }
 
-        await Evento.destroy({ where: { id: eventoId } });
+        await EarthEvent.destroy({ where: { id: eventoId } });
 
         res.json({
             ok: true,
@@ -158,8 +158,8 @@ const eliminarEvento = async (req, res = response) => {
 
 
 module.exports = {
-    getEventos,
-    crearEvento,
-    actualizarEvento,
-    eliminarEvento
+    getEarthEvent,
+    createEarthEvent,
+    updateEarthEvent,
+    deleteEarthEvent
 }
