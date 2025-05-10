@@ -12,13 +12,16 @@ const { validarJwt } = require('../middlewares/validarJwt')
 
 const router = Router()
 
+
+
 /* ----- OBTENER USUARIOS ----- */
 router.get(
     '/',
     [
 
     ],
-    obtenerUsuarios
+    validarJwt,
+    obtenerUsuarios,
 )
 
 /* ----- CREAR USUARIO ----- */
@@ -32,7 +35,8 @@ router.post(
         check('role', 'el rol es obligatorio').not().isEmpty(),
         validarCampos
     ],
-    crearUsuario
+    validarJwt,
+    crearUsuario,
 )
 
 /* ----- INGRESAR ----- */
@@ -57,11 +61,12 @@ router.put(
         // check('password', 'La contraseña es obligatoria').not().isEmpty(),
         validarCampos
     ],
-    actualizarUsuario
+    validarJwt,
+    actualizarUsuario,
 )
 
 /* ----- REVALIDAR ----- */
-router.get('/renew', validarJwt, revalidarToken)
+// router.get('/renew', validarJwt, revalidarToken)
 
 /* ----- ELIMINAR USUARIO ----- */
 router.delete(
