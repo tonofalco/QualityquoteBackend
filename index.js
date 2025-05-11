@@ -3,7 +3,7 @@ const cors = require('cors')
 const pc = require('picocolors');
 
 require('dotenv').config()
-const {dbConnectMySql} = require('./src/database/config');
+const { dbConnectMySql } = require('./src/database/config');
 
 // Se Crea el servidor con express
 const app = express()
@@ -12,7 +12,23 @@ const app = express()
 dbConnectMySql()
 
 // CORS
-app.use(cors())
+const allowedOrigins = [
+    'http://localhost:4100',
+    'https://vqc.netlify.app',
+    'http://localhost:5173'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true
+}));
 
 // Lectura y parseo del body
 app.use(express.json())
@@ -21,11 +37,11 @@ app.use(express.json())
 //TODO: auth | obtener, crear, eliminar, actualizar, login, renewJWT
 app.use('/api/users', require('./src/routes/userRoute'));
 //TODO CRUD: events | obtener, crear, eliminar, actualizar
-app.use('/api/events', require('./src/routes/events'));
-//TODO CRUD: events | obtener, crear, eliminar, actualizar
-app.use('/api/aerialEvents', require('./src/routes/aerialEvents'));
+app.use('/api/earthEvents', require('./src/routes/earthEventRoute'));
+// //TODO CRUD: events | obtener, crear, eliminar, actualizar
+// app.use('/api/aerialEvents', require('./src/routes/aerialEvents'));
 //TODO CRUD: Costos Tabla kms | obtener, actualizar
-app.use('/api/cost/kmsTable', require('./src/routes/config'));
+app.use('/api/cost/firstDayCosts', require('./src/routes/firstDayCostRoute'));
 //TODO CRUD: Costos especiales primer dia | obtener, actualizar
 app.use('/api/cost/firstDaySpecialCosts', require('./src/routes/firstDaySpecialCosts'));
 //TODO CRUD: Costos Dia extra | obtener, crear, eliminar, actualizar
