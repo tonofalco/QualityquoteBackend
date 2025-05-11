@@ -1,7 +1,7 @@
 const { sequelize } = require("../database/config")
 const { DataTypes } = require("sequelize");
 
-const CostosDiaExtra = sequelize.define('CostosDiaExtra', {
+const ExtraDayCost = sequelize.define('extraDayCost', {
 
     cost: {
         type: DataTypes.STRING,
@@ -17,4 +17,4 @@ const CostosDiaExtra = sequelize.define('CostosDiaExtra', {
     },
 });
 
-module.exports = CostosDiaExtra;
+module.exports = ExtraDayCost;

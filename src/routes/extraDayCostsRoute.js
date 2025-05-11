@@ -4,12 +4,12 @@ const { check } = require('express-validator')
 const { validarCampos } = require('../middlewares/validarCampos')
 const { validarJwt } = require('../middlewares/validarJwt')
 
-const { obtenerCostosDiaExtra, crearCostoDiaExtra, actualizarCostoDiaExtra, eliminarCostoDiaExtra } = require('../controllers/extraDayCosts');
+const { getExtraDayCosts, createExtraDayCosts, updateExtraDayCosts, deleteExtraDayCosts } = require('../controllers/extraDayCostsController');
 
 const router = Router()
 
 // -- todas tienen que pasar por la validacion del JWT -- //
-// router.use(validarJwt)
+router.use(validarJwt)
 
 /* ----- OBTENER COSTOS ----- */
 router.get(
@@ -17,7 +17,7 @@ router.get(
     [
 
     ],
-    obtenerCostosDiaExtra
+    getExtraDayCosts
 )
 
 /* ----- CREAR COSTO ----- */
@@ -29,8 +29,7 @@ router.post(
         check('valueFs', 'El valor en fin de semana es obligatorio').not().isEmpty(),
         validarCampos
     ],
-    validarJwt,
-    crearCostoDiaExtra
+    createExtraDayCosts
 )
 
 /* ----- ACTUALIZAR COSTO ----- */
@@ -42,8 +41,7 @@ router.put(
         check('valueFs', 'El valor en fin de semana es obligatorio').not().isEmpty(),
         validarCampos
     ],
-    validarJwt,
-    actualizarCostoDiaExtra
+    updateExtraDayCosts
 )
 
 /* ----- ELIMINAR COSTO ----- */
@@ -52,8 +50,7 @@ router.delete(
     [
 
     ],
-    validarJwt,
-    eliminarCostoDiaExtra
+    deleteExtraDayCosts
 )
 
 module.exports = router;

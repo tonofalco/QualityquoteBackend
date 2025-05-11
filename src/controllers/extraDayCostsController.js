@@ -1,14 +1,14 @@
-const CostosDiaExtra = require("../models/CostosDiaExtra");
+const ExtraDayCost = require("../models/ExtraDayCost");
 
 
 
 //---------OBTENER COSTOS DIA EXTRA------------
-const obtenerCostosDiaExtra = async (req, res) => {
+const getExtraDayCosts = async (req, res) => {
     try {
             // console.log(req.body);
 
         // Obtener usuarios
-        const costosDiaExtra = await CostosDiaExtra.findAll()
+        const costosDiaExtra = await ExtraDayCost.findAll()
 
         // console.log(CostosDiaExtra);
 
@@ -27,13 +27,13 @@ const obtenerCostosDiaExtra = async (req, res) => {
 };
 
 //---------CREAR COSTO DIA EXTRA------------
-const crearCostoDiaExtra = async (req, res) => {
+const createExtraDayCosts = async (req, res) => {
     try {
         // Extraer los datos de la tabla costosDiaExtra
         const { cost, valueEs, valueFs } = req.body;
 
         // Crear el evento
-        const costoDiaExtra = await CostosDiaExtra.create({
+        const costoDiaExtra = await ExtraDayCost.create({
             cost, 
             valueEs, 
             valueFs,
@@ -54,12 +54,12 @@ const crearCostoDiaExtra = async (req, res) => {
 };
 
 //---------ACTUALIZAR COSTO DIA EXTRA------------
-const actualizarCostoDiaExtra = async (req, res) => {
+const updateExtraDayCosts = async (req, res) => {
     try {
         const eventoId = req.params.id;
 
         // Buscar el evento por su ID
-        const costoDiaExtra = await CostosDiaExtra.findByPk(eventoId);
+        const costoDiaExtra = await ExtraDayCost.findByPk(eventoId);
 
         if (!costoDiaExtra) {
             return res.status(404).json({
@@ -92,12 +92,12 @@ const actualizarCostoDiaExtra = async (req, res) => {
 };
 
 //---------Eliminar COSTO DIA EXTRA------------
-const eliminarCostoDiaExtra = async (req, res = response) => {
+const deleteExtraDayCosts = async (req, res = response) => {
 
     const eventoId = req.params.id;
 
     try {
-        const costoDiaExtra = await CostosDiaExtra.findByPk(eventoId);
+        const costoDiaExtra = await ExtraDayCost.findByPk(eventoId);
 
         if (!costoDiaExtra) {
             return res.status(404).json({
@@ -122,8 +122,8 @@ const eliminarCostoDiaExtra = async (req, res = response) => {
 };
 
 module.exports = {
-    obtenerCostosDiaExtra,
-    crearCostoDiaExtra,
-    actualizarCostoDiaExtra,
-    eliminarCostoDiaExtra,
+    getExtraDayCosts,
+    createExtraDayCosts,
+    updateExtraDayCosts,
+    deleteExtraDayCosts,
 }

@@ -45,7 +45,7 @@ app.use('/api/cost/firstDayCosts', require('./src/routes/firstDayCostRoute'));
 //TODO CRUD: Costos especiales primer dia | obtener, actualizar
 app.use('/api/cost/specialFirstDayRules', require('./src/routes/SpecialFirstDayRulesRoute'));
 //TODO CRUD: Costos Dia extra | obtener, crear, eliminar, actualizar
-app.use('/api/cost/extraDay', require('./src/routes/extraDayCosts'));
+app.use('/api/cost/extraDay', require('./src/routes/extraDayCostsRoute'));
 
 // Directorio Publico backend
 app.use(express.static('public'))
