@@ -1,11 +1,11 @@
-const CostosTablaKms = require('../models/CostosTablaKms');
+const FirstDayCost = require('../models/FirstDayCost');
 
 //---------OBTENER COSTOS POR KMS------------
-const obtenerCostos = async (req, res) => {
+const getFirstDayCosts = async (req, res) => {
     try {
 
         // Obtener costes de bd
-        const costesKms = await CostosTablaKms.findAll()
+        const costesKms = await FirstDayCost.findAll()
 
         res.status(200).json({
             ok: true,
@@ -23,7 +23,7 @@ const obtenerCostos = async (req, res) => {
 
 
 //---------ACTUALIZAR COSTO POR KMS------------
-const actualizarCostos = async (req, res) => {
+const updateFirstDayCosts = async (req, res) => {
     const { id } = req.params; // Obtener el ID de configuración de los parámetros de la solicitud
     const nuevosValores = req.body; // Obtener los nuevos valores de configuración de la solicitud
 
@@ -31,7 +31,7 @@ const actualizarCostos = async (req, res) => {
     // nuevosValores.gasoline = parseFloat(nuevosValores.gasoline, 10);
 
     try {
-        let costesPorId = await CostosTablaKms.findByPk(id);
+        let costesPorId = await FirstDayCost.findByPk(id);
         
         // Verificar si la configuración existe
         if (!costesPorId) {
@@ -62,6 +62,6 @@ const actualizarCostos = async (req, res) => {
 
 
 module.exports = {
-    obtenerCostos,
-    actualizarCostos,
+    getFirstDayCosts,
+    updateFirstDayCosts,
 }

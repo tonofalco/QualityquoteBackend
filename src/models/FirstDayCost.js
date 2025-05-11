@@ -1,7 +1,7 @@
 const { sequelize } = require("../database/config")
 const { DataTypes } = require("sequelize");
 
-const CostosTablaKms = sequelize.define('CostosTablaKms', {
+const FirstDayCost = sequelize.define('firstDayCost', {
 
     //TABLA KMS
     gasoline: {
@@ -31,4 +31,4 @@ const CostosTablaKms = sequelize.define('CostosTablaKms', {
 
 });
 
-module.exports = CostosTablaKms;
+module.exports = FirstDayCost;
