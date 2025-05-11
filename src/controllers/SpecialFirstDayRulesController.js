@@ -1,4 +1,4 @@
-const CostosEspecialesDiaExtra = require('../models/CostosEspecialesPrimerDia');
+const SpecialFirstDayRules = require('../models/SpecialFirstDayRules');
 
 //---------OBTENER COSTOS POR KMS------------
 const obtenerCostosEspeciales = async (req, res) => {
@@ -6,7 +6,7 @@ const obtenerCostosEspeciales = async (req, res) => {
     try {
 
         // Obtener costes de bd
-        const costesKms = await CostosEspecialesDiaExtra.findAll()
+        const costesKms = await SpecialFirstDayRules.findAll()
 
         res.status(200).json({
             ok: true,
@@ -32,7 +32,7 @@ const actualizarCostosEspeciales = async (req, res) => {
     // nuevosValores.gasoline = parseFloat(nuevosValores.gasoline, 10);
 
     try {
-        let costesPorId = await CostosEspecialesDiaExtra.findByPk(id);
+        let costesPorId = await SpecialFirstDayRules.findByPk(id);
         
         // Verificar si la configuración existe
         if (!costesPorId) {

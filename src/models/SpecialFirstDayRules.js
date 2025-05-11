@@ -1,7 +1,7 @@
 const { sequelize } = require("../database/config")
 const { DataTypes } = require("sequelize");
 
-const CostosEspecialesPrimerDia = sequelize.define('CostosEspecialesPrimerDia', {
+const SpecialFirstDayRules = sequelize.define('specialFirstDayRules', {
 
     //COSTOS ESPECIALES
     kms: {
@@ -23,4 +23,4 @@ const CostosEspecialesPrimerDia = sequelize.define('CostosEspecialesPrimerDia', 
 
 });
 
-module.exports = CostosEspecialesPrimerDia;
+module.exports = SpecialFirstDayRules;

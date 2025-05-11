@@ -3,7 +3,7 @@ const { Router } = require('express')
 const { validarCampos } = require('../middlewares/validarCampos')
 const { validarJwt } = require('../middlewares/validarJwt')
 
-const { actualizarCostosEspeciales, obtenerCostosEspeciales } = require('../controllers/firstDayspecialCosts')
+const { actualizarCostosEspeciales, obtenerCostosEspeciales } = require('../controllers/SpecialFirstDayRulesController')
 
 const router = Router()
 
