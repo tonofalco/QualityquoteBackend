@@ -1,7 +1,7 @@
 const SpecialFirstDayRules = require('../models/SpecialFirstDayRules');
 
 //---------OBTENER COSTOS POR KMS------------
-const obtenerCostosEspeciales = async (req, res) => {
+const getSpecialFirstDayRules = async (req, res) => {
     // console.log('hola mundo')
     try {
 
@@ -24,7 +24,7 @@ const obtenerCostosEspeciales = async (req, res) => {
 
 
 //---------ACTUALIZAR COSTO POR KMS------------
-const actualizarCostosEspeciales = async (req, res) => {
+const updateSpecialFirstDayRules = async (req, res) => {
     const { id } = req.params; // Obtener el ID de configuración de los parámetros de la solicitud
     const nuevosValores = req.body; // Obtener los nuevos valores de configuración de la solicitud
 
@@ -63,6 +63,6 @@ const actualizarCostosEspeciales = async (req, res) => {
 
 
 module.exports = {
-    obtenerCostosEspeciales: obtenerCostosEspeciales,
-    actualizarCostosEspeciales: actualizarCostosEspeciales,
+    getSpecialFirstDayRules,
+    updateSpecialFirstDayRules,
 }

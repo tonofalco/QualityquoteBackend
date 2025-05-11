@@ -3,7 +3,7 @@ const { Router } = require('express')
 const { validarCampos } = require('../middlewares/validarCampos')
 const { validarJwt } = require('../middlewares/validarJwt')
 
-const { actualizarCostosEspeciales, obtenerCostosEspeciales } = require('../controllers/SpecialFirstDayRulesController')
+const { getSpecialFirstDayRules, updateSpecialFirstDayRules } = require('../controllers/SpecialFirstDayRulesController')
 
 const router = Router()
 
@@ -16,7 +16,7 @@ router.get(
     [
 
     ],
-    obtenerCostosEspeciales
+    getSpecialFirstDayRules
 )
 
 /* ----- ACTUALIZAR COSTOS TABLA KMS ----- */
@@ -26,7 +26,7 @@ router.put(
         validarCampos
     ],
     validarJwt,
-    actualizarCostosEspeciales
+    updateSpecialFirstDayRules
 )
 
 
