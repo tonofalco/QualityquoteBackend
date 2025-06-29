@@ -1,16 +1,13 @@
-const ExtraDayCost = require("../models/ExtraDayCost");
+import { ExtraDayCost } from "../models/ExtraDayCost.model";
 
 
 
 //---------OBTENER COSTOS DIA EXTRA------------
-const getExtraDayCosts = async (req, res) => {
+export const getExtraDayCosts = async (req: any, res: any) => {
     try {
-            // console.log(req.body);
 
         // Obtener usuarios
         const costosDiaExtra = await ExtraDayCost.findAll()
-
-        // console.log(CostosDiaExtra);
 
         res.status(200).json({
             ok: true,
@@ -27,15 +24,16 @@ const getExtraDayCosts = async (req, res) => {
 };
 
 //---------CREAR COSTO DIA EXTRA------------
-const createExtraDayCosts = async (req, res) => {
+export const createExtraDayCosts = async (req: any, res: any) => {
     try {
         // Extraer los datos de la tabla costosDiaExtra
-        const { cost, valueEs, valueFs } = req.body;
+        const { id, cost, valueEs, valueFs } = req.body;
 
         // Crear el evento
         const costoDiaExtra = await ExtraDayCost.create({
-            cost, 
-            valueEs, 
+            id,
+            cost,
+            valueEs,
             valueFs,
         });
 
@@ -54,7 +52,7 @@ const createExtraDayCosts = async (req, res) => {
 };
 
 //---------ACTUALIZAR COSTO DIA EXTRA------------
-const updateExtraDayCosts = async (req, res) => {
+export const updateExtraDayCosts = async (req: any, res: any) => {
     try {
         const eventoId = req.params.id;
 
@@ -70,9 +68,11 @@ const updateExtraDayCosts = async (req, res) => {
 
 
         // Actualizar los campos del evento
-        costoDiaExtra.cost = req.body.cost;
-        costoDiaExtra.valueEs = req.body.valueEs;
-        costoDiaExtra.valueFs = req.body.valueFs;
+        costoDiaExtra.set({
+            cost: req.body.cost,
+            valueEs: req.body.valueEs,
+            valueFs: req.body.valueFs,
+        });
 
         // Guardar los cambios en la base de datos
         await costoDiaExtra.save();
@@ -92,7 +92,7 @@ const updateExtraDayCosts = async (req, res) => {
 };
 
 //---------Eliminar COSTO DIA EXTRA------------
-const deleteExtraDayCosts = async (req, res = response) => {
+export const deleteExtraDayCosts = async (req: any, res: any) => {
 
     const eventoId = req.params.id;
 
@@ -106,7 +106,8 @@ const deleteExtraDayCosts = async (req, res = response) => {
             });
         }
 
-        await costoDiaExtra.destroy({ where: { id: eventoId } });
+        await ExtraDayCost.destroy({ where: { id: eventoId } });
+
 
         res.json({
             ok: true,
@@ -120,10 +121,3 @@ const deleteExtraDayCosts = async (req, res = response) => {
         });
     }
 };
-
-module.exports = {
-    getExtraDayCosts,
-    createExtraDayCosts,
-    updateExtraDayCosts,
-    deleteExtraDayCosts,
-}

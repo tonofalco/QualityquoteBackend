@@ -3,21 +3,22 @@
     /api/events
  */
 
-const { Router } = require('express')
-const { check } = require('express-validator')
+import { Router } from 'express';
+import { check } from 'express-validator';
 
-const { isDate } = require('../helpers/isDate')
-const { validarCampos } = require('../middlewares/validarCampos')
-const { validarJwt } = require('../middlewares/validarJwt')
-const { getEarthEvent, createEarthEvent, updateEarthEvent, deleteEarthEvent } = require('../controllers/earthEventController')
+import { validarJwt } from '../middlewares/validarJwt';
+import { validarCampos } from '../middlewares/validarCampos';
+import { isDate } from '../helpers/isDate';
+
+import { getEarthEvent, createEarthEvent, updateEarthEvent, deleteEarthEventById } from '../controllers/earthEvent.controller';
 
 
 const router = Router()
 
-// todas tienen que pasar por la validacion del JWT
+// todas las rutas tienen que pasar por la validacion del JWT
 router.use(validarJwt)
 
-// obtener eventos
+//----------OBTENER EVENTOS TERRESTRE-----------
 router.get(
     '/',
     [
@@ -26,7 +27,7 @@ router.get(
     getEarthEvent
 )
 
-// crear un nuevo eventos
+//----------CREAR EVENTO TERRESTRE-----------
 router.post(
     '/',
     [
@@ -47,7 +48,7 @@ router.post(
     createEarthEvent
 )
 
-// Actualizar eventos
+//----------ACTUALIZAR EVENTO TERRESTRE-----------
 router.put(
     '/:id',
     [
@@ -66,13 +67,13 @@ router.put(
     ],
     updateEarthEvent)
 
-// borrar eventos
+//----------ELIMINAR  EVENTO TERRESTRE-----------
 router.delete(
     '/:id',
     [
 
     ],
-    deleteEarthEvent
+    deleteEarthEventById
 )
 
 

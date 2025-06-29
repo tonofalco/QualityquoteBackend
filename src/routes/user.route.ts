@@ -1,14 +1,14 @@
-
 /*
     Rutas de usuarios / Auth
     host + /api/auth
 */
-const { createUser, loginUser, getUsers, updateUser, deleteUser, revalidarToken } = require('../controllers/userController')
+import { Router } from 'express';
+import { check } from 'express-validator';
 
-const { Router } = require('express')
-const { check } = require('express-validator')
-const { validarCampos } = require('../middlewares/validarCampos')
-const { validarJwt } = require('../middlewares/validarJwt')
+import { validarJwt } from '../middlewares/validarJwt';
+import { validarCampos } from '../middlewares/validarCampos';
+
+import { createUser, loginUser, getUsers, updateUser, deleteUser } from '../controllers/user.controller'
 
 const router = Router()
 
@@ -49,8 +49,6 @@ router.post(
     createUser,
 )
 
-
-
 /* ----- ACTUALIZAR USUARIO ----- */
 router.put(
     '/:id',
@@ -66,7 +64,12 @@ router.put(
 )
 
 /* ----- REVALIDAR ----- */
-router.get('/renew', validarJwt, revalidarToken)
+router.get(
+    '/renew',
+    [],
+    validarJwt,
+    deleteUser
+)
 
 /* ----- ELIMINAR USUARIO ----- */
 router.delete(
@@ -77,6 +80,4 @@ router.delete(
     deleteUser
 )
 
-
-module.exports = router
-
+module.exports = router;

@@ -1,14 +1,13 @@
-const { Router } = require('express')
+import { Router } from 'express';
 
-const { validarCampos } = require('../middlewares/validarCampos')
-const { validarJwt } = require('../middlewares/validarJwt')
+import { validarJwt } from '../middlewares/validarJwt';
 
-const { getSpecialFirstDayRules, updateSpecialFirstDayRules } = require('../controllers/SpecialFirstDayRulesController')
+import { getSpecialFirstDayRules, updateSpecialFirstDayRules } from '../controllers/SpecialFirstDayRule.controller';
 
 const router = Router()
 
 // -- todas tienen que pasar por la validacion del JWT -- //
-// router.use(validarJwt)
+router.use(validarJwt)
 
 /* ----- OBTENER COSTOS TABLA KMS ----- */
 router.get(
@@ -23,7 +22,7 @@ router.get(
 router.put(
     '/:id',
     [
-        validarCampos
+
     ],
     validarJwt,
     updateSpecialFirstDayRules

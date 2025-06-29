@@ -1,10 +1,12 @@
-const { response } = require('express')
-const EarthEvent = require('../models/EarthEvent')
-const User = require('../models/User');
+import { response } from 'express';
+import { EarthEvent } from '../models/EarthEvent.model';
+import { User } from '../models/User.model';
 
-
-const getEarthEvent = async (req, res) => {
+//----------OBTENER EVENTOS TERRESTRE-----------
+export const getEarthEvent = async (req: any, res:any) => {
     try {
+
+        console.log('req.uid', req.uid)
         // Obtener eventos
         const eventos = await EarthEvent.findAll({
             include: {
@@ -27,14 +29,15 @@ const getEarthEvent = async (req, res) => {
     }
 };
 
-
-const createEarthEvent = async (req, res) => {
+//----------CREAR EVENTO TERRESTRE-----------
+export const createEarthEvent = async (req: any, res:any) => {
     try {
         // Extraer los datos del evento del cuerpo de la solicitud
-        const { transport, transportNumber, seats, nameClient, phone, departure, destination, status, notes, start, end, price, advance } = req.body;
+        const {  id, transport, transportNumber, seats, nameClient, phone, departure, destination, status, notes, start, end, price, advance } = req.body;
 
         // Crear el evento
         const evento = await EarthEvent.create({
+            id,
             seats,
             transport,
             transportNumber,
@@ -64,8 +67,8 @@ const createEarthEvent = async (req, res) => {
     }
 };
 
-
-const updateEarthEvent = async (req, res) => {
+//----------ACTUALIZAR EVENTO TERRESTRE-----------
+export const updateEarthEvent = async (req: any, res:any) => {
     try {
         const eventoId = req.params.id;
         const uid = req.uid;
@@ -80,27 +83,28 @@ const updateEarthEvent = async (req, res) => {
             });
         }
 
-        if (evento.userId !== uid.toString()) {
+        if (evento.get('userId') !== uid.toString()) {
             return res.status(401).json({
                 ok: false,
                 msg: 'No tiene privilegios para editar este evento',
             });
         }
 
-        // Actualizar los campos del evento
-        evento.transport = req.body.transport;
-        evento.transportNumber = req.body.transportNumber;
-        evento.seats = req.body.seats;
-        evento.nameClient = req.body.nameClient;
-        evento.phone = req.body.phone;
-        evento.departure = req.body.departure;
-        evento.destination = req.body.destination;
-        evento.price = req.body.price;
-        evento.advance = req.body.advance;
-        evento.status = req.body.status;
-        evento.notes = req.body.notes;
-        evento.start = req.body.start;
-        evento.end = req.body.end;
+        evento.set({
+            transport: req.body.transport,
+            transportNumber: req.body.transportNumber,
+            seats: req.body.seats,
+            nameClient: req.body.nameClient,
+            phone: req.body.phone,
+            departure: req.body.departure,
+            destination: req.body.destination,
+            price: req.body.price,
+            advance: req.body.advance,
+            status: req.body.status,
+            notes: req.body.notes,
+            start: req.body.start,
+            end: req.body.end,
+        });
 
         // Guardar los cambios en la base de datos
         await evento.save();
@@ -118,8 +122,8 @@ const updateEarthEvent = async (req, res) => {
     }
 };
 
-
-const deleteEarthEvent = async (req, res = response) => {
+//----------ELIMINAR  EVENTO TERRESTRE-----------
+export const deleteEarthEventById = async (req: any, res:any = response) => {
     const eventoId = req.params.id;
     const uid = req.uid;
 
@@ -133,7 +137,7 @@ const deleteEarthEvent = async (req, res = response) => {
             });
         }
 
-        if (evento.userId !== uid.toString()) {
+        if (evento.get('userId') !== uid.toString()) {
             return res.status(401).json({
                 ok: false,
                 msg: 'No tiene privilegios para eliminar este evento'
@@ -154,12 +158,3 @@ const deleteEarthEvent = async (req, res = response) => {
         });
     }
 };
-
-
-
-module.exports = {
-    getEarthEvent,
-    createEarthEvent,
-    updateEarthEvent,
-    deleteEarthEvent
-}

@@ -1,7 +1,7 @@
-const SpecialFirstDayRules = require('../models/SpecialFirstDayRules');
+import { SpecialFirstDayRules } from '../models/SpecialFirstDayRules.model';
 
 //---------OBTENER COSTOS POR KMS------------
-const getSpecialFirstDayRules = async (req, res) => {
+export const getSpecialFirstDayRules = async (req: any, res: any) => {
     // console.log('hola mundo')
     try {
 
@@ -24,7 +24,7 @@ const getSpecialFirstDayRules = async (req, res) => {
 
 
 //---------ACTUALIZAR COSTO POR KMS------------
-const updateSpecialFirstDayRules = async (req, res) => {
+export const updateSpecialFirstDayRules = async (req: any, res: any) => {
     const { id } = req.params; // Obtener el ID de configuración de los parámetros de la solicitud
     const nuevosValores = req.body; // Obtener los nuevos valores de configuración de la solicitud
 
@@ -33,7 +33,7 @@ const updateSpecialFirstDayRules = async (req, res) => {
 
     try {
         let costesPorId = await SpecialFirstDayRules.findByPk(id);
-        
+
         // Verificar si la configuración existe
         if (!costesPorId) {
             return res.status(404).json({
@@ -60,9 +60,3 @@ const updateSpecialFirstDayRules = async (req, res) => {
         });
     }
 };
-
-
-module.exports = {
-    getSpecialFirstDayRules,
-    updateSpecialFirstDayRules,
-}

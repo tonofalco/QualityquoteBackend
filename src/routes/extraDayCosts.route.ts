@@ -1,10 +1,10 @@
-const { Router } = require('express')
-const { check } = require('express-validator')
+import { Router } from 'express';
+import { check } from 'express-validator';
 
-const { validarCampos } = require('../middlewares/validarCampos')
-const { validarJwt } = require('../middlewares/validarJwt')
+import { validarJwt } from '../middlewares/validarJwt';
+import { validarCampos } from '../middlewares/validarCampos';
 
-const { getExtraDayCosts, createExtraDayCosts, updateExtraDayCosts, deleteExtraDayCosts } = require('../controllers/extraDayCostsController');
+import { getExtraDayCosts, createExtraDayCosts, updateExtraDayCosts, deleteExtraDayCosts } from '../controllers/extraDayCosts.controller';
 
 const router = Router()
 

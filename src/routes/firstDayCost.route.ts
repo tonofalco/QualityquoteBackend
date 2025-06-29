@@ -1,9 +1,10 @@
-const { Router } = require('express')
+import { Router } from 'express';
 
-const { validarCampos } = require('../middlewares/validarCampos')
-const { validarJwt } = require('../middlewares/validarJwt')
+import { validarJwt } from '../middlewares/validarJwt';
+import { validarCampos } from '../middlewares/validarCampos';
 
-const { updateFirstDayCosts, getFirstDayCosts } = require('../controllers/firstDayCostController')
+
+import { updateFirstDayCosts, getFirstDayCosts } from '../controllers/firstDayCost.controller';
 
 const router = Router()
 
@@ -23,7 +24,6 @@ router.get(
 router.put(
     '/:id',
     [
-        validarCampos
     ],
     validarJwt,
     updateFirstDayCosts

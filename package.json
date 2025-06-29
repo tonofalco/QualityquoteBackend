@@ -4,8 +4,8 @@
   "description": "Aplicacion de uso interno Viajes quality",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon --watch './' --ext ts --exec ts-node index.ts",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,17 @@
     "mongoose": "^6.6.2",
     "mysql2": "^3.9.7",
     "nodemon": "^3.1.0",
-    "picocolors": "^1.0.0",
+    "picocolors": "^1.1.1",
     "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.0.7",
+    "@types/sequelize": "^4.28.20",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

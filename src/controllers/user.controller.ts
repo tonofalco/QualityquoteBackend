@@ -1,16 +1,17 @@
-const { response } = require('express')
-const bcrypt = require('bcryptjs')
-const User = require('../models/User')
-const { generarJWT } = require('../helpers/jwt');
+
+import bcrypt from 'bcryptjs';
+
+import { User } from '../models/User.model';
+import { generarJWT } from '../helpers/jwt';
+
 
 //----------LOGIN-----------
-const loginUser = async (req, res = response) => {
+export const loginUser = async (req: any, res:any) => {
 
     const { email, password } = req.body
 
     try {
 
-        // const usuario = await Usuario.findOne({ email })
         let usuario = await User.findOne({ where: { email } });
 
         if (!usuario) {
@@ -21,7 +22,7 @@ const loginUser = async (req, res = response) => {
         }
 
         // Confirmar los passwords
-        const validPassword = bcrypt.compareSync(password, usuario.password);
+        const validPassword = bcrypt.compareSync(password, usuario.get('password') as string);
 
         if (!validPassword) {
             return res.status(400).json({
@@ -31,13 +32,17 @@ const loginUser = async (req, res = response) => {
         }
 
         //Generar nuestro JWT
-        const token = await generarJWT(usuario.id, usuario.name, usuario.role)
+        const token = await generarJWT(
+            usuario.get('id') as string,
+            usuario.get('name') as string,
+            usuario.get('role') as string,
+        );
 
         res.json({
             ok: true,
-            uid: usuario.id,
-            name: usuario.name,
-            role: usuario.role,
+            uid: usuario.get('id') as string,
+            name: usuario.get('name') as string,
+            role: usuario.get('role') as string,
             token
         })
 
@@ -51,13 +56,12 @@ const loginUser = async (req, res = response) => {
 };
 
 //---------OBTENER------------
-const getUsers = async (req, res) => {
-    
+export const getUsers = async (req: any, res: any) => {
+
     try {
         // Obtener usuarios
         const usuarios = await User.findAll();
-        // console.log(usuarios);
-        
+
         res.status(200).json({
             ok: true,
             usuarios,
@@ -72,13 +76,12 @@ const getUsers = async (req, res) => {
 };
 
 //---------CREAR------------
-const createUser = async (req, res = response) => {
+export const createUser = async (req: any, res: any) => {
 
     const { email, password } = req.body
 
     try {
 
-        // let usuario = await Usuario.findOne({ email })
         let usuario = await User.findOne({ where: { email } });
 
 
@@ -89,23 +92,28 @@ const createUser = async (req, res = response) => {
             });
         }
 
-        usuario = new User(req.body) //agregar usuario
+        usuario = new User(); //agregar usuario
+        Object.assign(usuario, req.body)
 
-        //generar JWT
-        const token = await generarJWT(usuario.id, usuario.name, usuario.role)
+        //Generar nuestro JWT
+        const token = await generarJWT(
+            usuario.get('id') as string,
+            usuario.get('name') as string,
+            usuario.get('role') as string,
+        );
 
 
         //Encriptar contraseña
         const salt = bcrypt.genSaltSync();
-        usuario.password = bcrypt.hashSync(password, salt);
+        usuario.set('password', bcrypt.hashSync(password, salt));
 
         await usuario.save()
 
         res.status(201).json({
             ok: true,
-            uid: usuario.id,
-            name: usuario.name,
-            role: usuario.role,
+            uid: usuario.get('id') as string,
+            name: usuario.get('name') as string,
+            role: usuario.get('role') as string,
             token
         })
 
@@ -120,9 +128,9 @@ const createUser = async (req, res = response) => {
 };
 
 //---------ACTUALIZAR------------
-const updateUser = async (req, res) => {
+export const updateUser = async (req: any, res: any) => {
     const { id } = req.params;
-    const { name, email, password, role } = req.body;
+    const { name, email, role } = req.body;
 
     try {
         // Verificar si el usuario existe
@@ -136,9 +144,12 @@ const updateUser = async (req, res) => {
         }
 
         // Actualizar los campos del usuario
-        usuario.name = name;
-        usuario.email = email;
-        usuario.role = role;
+        usuario.set({
+            name,
+            email,
+            role
+        });
+
         await usuario.save();
 
         res.status(200).json({
@@ -155,7 +166,7 @@ const updateUser = async (req, res) => {
 };
 
 //---------Eliminar------------
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req: any, res: any) => {
     const { id } = req.params;
 
     try {
@@ -186,24 +197,12 @@ const deleteUser = async (req, res) => {
 };
 
 //---------REVALIDAR------------
-const revalidarToken = async (req, res) => {
-
-    // const uid = req.uid
-    // const name = req.name
+export const revalidarToken = async (req: any, res: any) => {
 
     const { uid, name, role } = req
-    // console.log(role)
 
     //generar JWT
     const token = await generarJWT(uid, name, role)
-
-    // console.log('Revalidar Token response:', {
-    //     ok: true,
-    //     uid,
-    //     name,
-    //     role,
-    //     token
-    // });
 
     res.json({
         ok: true,
@@ -213,13 +212,3 @@ const revalidarToken = async (req, res) => {
         token
     })
 };
-
-
-module.exports = {
-    loginUser,
-    getUsers,
-    createUser,
-    updateUser,
-    deleteUser,
-    revalidarToken,
-}

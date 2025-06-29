@@ -1,7 +1,7 @@
-const FirstDayCost = require('../models/FirstDayCost');
+import { FirstDayCost } from '../models/FirstDayCost.model';
 
 //---------OBTENER COSTOS POR KMS------------
-const getFirstDayCosts = async (req, res) => {
+export const getFirstDayCosts = async (req: any, res: any) => {
     try {
 
         // Obtener costes de bd
@@ -23,7 +23,7 @@ const getFirstDayCosts = async (req, res) => {
 
 
 //---------ACTUALIZAR COSTO POR KMS------------
-const updateFirstDayCosts = async (req, res) => {
+export const updateFirstDayCosts = async (req: any, res: any) => {
     const { id } = req.params; // Obtener el ID de configuración de los parámetros de la solicitud
     const nuevosValores = req.body; // Obtener los nuevos valores de configuración de la solicitud
 
@@ -32,7 +32,7 @@ const updateFirstDayCosts = async (req, res) => {
 
     try {
         let costesPorId = await FirstDayCost.findByPk(id);
-        
+
         // Verificar si la configuración existe
         if (!costesPorId) {
             return res.status(404).json({
@@ -59,9 +59,3 @@ const updateFirstDayCosts = async (req, res) => {
         });
     }
 };
-
-
-module.exports = {
-    getFirstDayCosts,
-    updateFirstDayCosts,
-}

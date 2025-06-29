@@ -1,8 +1,16 @@
-const { sequelize } = require("../database/config")
-const { DataTypes } = require("sequelize");
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../database/config";
 
-const FirstDayCost = sequelize.define('firstDayCost', {
+interface FirstDayCostAttributes {
+    gasoline: number;
+    salary: number;
+    booths: number;
+    maintenance: number;
+    utility: number;
+    supplement: number;
+}
 
+export const FirstDayCost = sequelize.define<Model<FirstDayCostAttributes>>('firstDayCost', {
     //TABLA KMS
     gasoline: {
         type: DataTypes.DOUBLE,
@@ -28,7 +36,4 @@ const FirstDayCost = sequelize.define('firstDayCost', {
         type: DataTypes.DOUBLE,
         allowNull: false
     },
-
 });
-
-module.exports = FirstDayCost;

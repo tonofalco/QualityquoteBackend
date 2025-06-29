@@ -1,8 +1,31 @@
-const { sequelize } = require("../database/config")
-const { DataTypes } = require('sequelize');
-const user = require('./User');
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../database/config";
+import { User } from './User.model';
 
-const EarthEvent = sequelize.define('earthEvent', {
+interface EarthEventAttributes {
+    id: number; // Asumiendo que el ID es un número entero
+    transportNumber: string;
+    transport: string;
+    seats: number;
+    nameClient: string;
+    phone: string;
+    departure: string;
+    destination: string;
+    price: number;
+    advance: number;
+    start: Date;
+    end: Date;
+    status: string;
+    notes?: string; // opcional porque no tiene `allowNull: false`
+    userId: string;
+}
+
+export const EarthEvent = sequelize.define<Model<EarthEventAttributes>>('earthEvent', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     transportNumber: {
         type: DataTypes.STRING,
         allowNull: false
@@ -60,7 +83,4 @@ const EarthEvent = sequelize.define('earthEvent', {
     }
 });
 
-EarthEvent.belongsTo(user, { foreignKey: 'userId' });
-
-
-module.exports = EarthEvent;
+EarthEvent.belongsTo(User, { foreignKey: 'userId' });
